@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - AI Radiology Assistant{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1>System Administration Dashboard</h1>
+            <p class="text-muted">Manage users, monitor system performance, and view analytics</p>
+        </div>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h6 class="card-title text-muted">Total Users</h6>
+                    <h2 class="text-primary">{{ statistics.total_users }}</h2>
+                    <small class="text-success">
+                        <i class="fas fa-arrow-up"></i> Active: {{ statistics.active_users }}
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h6 class="card-title text-muted">Total Scans</h6>
+                    <h2 class="text-info">{{ statistics.total_scans }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h6 class="card-title text-muted">Pending Approvals</h6>
+                    <h2 class="text-warning">{{ statistics.pending_approvals }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h6 class="card-title text-muted">Inactive Users</h6>
+                    <h2 class="text-danger">{{ statistics.inactive_users }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Management Links -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">User Management</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="/admin/users" class="list-group-item list-group-item-action">
+                        <i class="fas fa-users"></i> All Users
+                    </a>
+                    <a href="/admin/doctors" class="list-group-item list-group-item-action">
+                        <i class="fas fa-stethoscope"></i> Doctors
+                    </a>
+                    <a href="/admin/patients" class="list-group-item list-group-item-action">
+                        <i class="fas fa-procedures"></i> Patients
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">System Monitor</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="/admin/reports" class="list-group-item list-group-item-action">
+                        <i class="fas fa-file-pdf"></i> Reports
+                    </a>
+                    <a href="/admin/statistics" class="list-group-item list-group-item-action">
+                        <i class="fas fa-chart-bar"></i> Statistics
+                    </a>
+                    <a href="/admin/logs" class="list-group-item list-group-item-action">
+                        <i class="fas fa-history"></i> Activity Logs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Doctor Dashboard - AI Radiology Assistant{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1>Welcome, Dr. {{ doctor.full_name }}</h1>
+            <p class="text-muted">Doctor Dashboard - Medical Image Review Platform</p>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Pending Reviews</h6>
+                    <h2 class="card-text">{{ statistics.pending_reviews }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Approved Scans</h6>
+                    <h2 class="card-text">{{ statistics.approved_scans }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Total Reviews</h6>
+                    <h2 class="card-text">{{ statistics.total_reviews }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Reviews Table -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-tasks"></i> Pending Scans for Review
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Scan Type</th>
+                                <th>AI Prediction</th>
+                                <th>Confidence</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for scan in pending_scans %}
+                            <tr>
+                                <td>{{ scan.patient.full_name }}</td>
+                                <td>
+                                    <span class="badge bg-secondary">{{ scan.scan_type|upper }}</span>
+                                </td>
+                                <td>{{ scan.prediction.predicted_disease }}</td>
+                                <td>
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar" style="width: {{ scan.prediction.confidence_score * 100 }}%">
+                                            {{ "%0.1f" % (scan.prediction.confidence_score * 100) }}%
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ scan.upload_date|strftime('%Y-%m-%d') }}</td>
+                                <td>
+                                    <a href="/doctor/review/{{ scan.id }}" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-check"></i> Review
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">No pending scans</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
